@@ -2,7 +2,7 @@ require('dotenv').config();
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 const logger = require('./utils/logger');
-const config = require('./utils/config');
+const configManager = require('./utils/configManager');
 const MessageHandler = require('./handlers/messageHandler');
 const GroupHandler = require('./handlers/groupHandler');
 const { execSync } = require('child_process');
@@ -60,6 +60,7 @@ class WhatsAppBot {
 
         this.client.on('ready', () => {
             this.isReady = true;
+            const config = configManager.getConfig();
             logger.info('🚀 Bot is ready and connected!');
             logger.info(`Bot Name: ${config.bot.name}`);
             logger.info(`Features: AI Chat, Auto Reply, Group Management, Media Support, Broadcast`);
@@ -72,12 +73,14 @@ class WhatsAppBot {
         });
 
         this.client.on('group_join', async (notification) => {
+            const config = configManager.getConfig();
             if (this.isReady && config.features.groupManagement) {
                 await this.groupHandler.handleGroupJoin(notification);
             }
         });
 
         this.client.on('group_leave', async (notification) => {
+            const config = configManager.getConfig();
             if (this.isReady && config.features.groupManagement) {
                 await this.groupHandler.handleGroupLeave(notification);
             }

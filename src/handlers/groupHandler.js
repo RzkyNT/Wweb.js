@@ -1,4 +1,4 @@
-const config = require('../utils/config');
+const configManager = require('../utils/configManager');
 const logger = require('../utils/logger');
 
 class GroupHandler {
@@ -13,6 +13,7 @@ class GroupHandler {
             if (!chat.isGroup) return;
 
             const contact = await notification.getContact();
+            const config = configManager.getConfig();
             
             const welcomeMsg = config.welcomeMessage.replace('{name}', `@${contact.id.user}`);
             

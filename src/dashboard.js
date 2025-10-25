@@ -1,13 +1,14 @@
 const express = require('express');
 const path = require('path');
 const logger = require('./utils/logger');
-const config = require('./utils/config');
+const configManager = require('./utils/configManager');
+const { authenticate, login, logout } = require('./middleware/auth');
 
 class Dashboard {
     constructor(bot) {
         this.bot = bot;
         this.app = express();
-        this.port = config.dashboard.port;
+        this.port = configManager.getConfig().dashboard.port;
         
         this.setupMiddleware();
         this.setupRoutes();
@@ -23,8 +24,13 @@ class Dashboard {
             res.sendFile(path.join(__dirname, '../public/index.html'));
         });
 
+        this.app.get('/admin', (req, res) => {
+            res.sendFile(path.join(__dirname, '../public/admin.html'));
+        });
+
         this.app.get('/api/status', (req, res) => {
             const status = this.bot.getStatus();
+            const config = configManager.getConfig();
             res.json({
                 success: true,
                 data: {
@@ -60,6 +66,69 @@ class Dashboard {
                     success: true,
                     message: 'Broadcast feature available via WhatsApp command: !broadcast'
                 });
+            } catch (error) {
+                res.status(500).json({
+                    success: false,
+                    message: error.message
+                });
+            }
+        });
+
+        this.app.post('/api/admin/login', (req, res) => {
+            try {
+                const { username, password } = req.body;
+                const result = login(username, password);
+                
+                if (result.success) {
+                    res.json(result);
+                } else {
+                    res.status(401).json(result);
+                }
+            } catch (error) {
+                res.status(500).json({
+                    success: false,
+                    message: error.message
+                });
+            }
+        });
+
+        this.app.post('/api/admin/logout', authenticate, (req, res) => {
+            const sessionId = req.headers['x-session-id'];
+            res.json(logout(sessionId));
+        });
+
+        this.app.get('/api/admin/config', authenticate, (req, res) => {
+            try {
+                const config = configManager.getConfig();
+                res.json({
+                    success: true,
+                    data: config
+                });
+            } catch (error) {
+                res.status(500).json({
+                    success: false,
+                    message: error.message
+                });
+            }
+        });
+
+        this.app.post('/api/admin/config', authenticate, (req, res) => {
+            try {
+                const newConfig = req.body;
+                const result = configManager.saveConfig(newConfig);
+                res.json(result);
+            } catch (error) {
+                res.status(500).json({
+                    success: false,
+                    message: error.message
+                });
+            }
+        });
+
+        this.app.post('/api/admin/config/reset', authenticate, (req, res) => {
+            try {
+                const result = configManager.resetToDefault();
+                res.json(result);
             } catch (error) {
                 res.status(500).json({
                     success: false,

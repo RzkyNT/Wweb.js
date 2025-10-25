@@ -1,4 +1,4 @@
-const config = require('../utils/config');
+const configManager = require('../utils/configManager');
 const logger = require('../utils/logger');
 const { chatWithAI, analyzeImageWithAI } = require('../services/gemini');
 
@@ -16,6 +16,7 @@ class MessageHandler {
             const contact = await msg.getContact();
             const isGroup = chat.isGroup;
             const body = msg.body.trim();
+            const config = configManager.getConfig();
 
             logger.info(`Message from ${contact.pushname || contact.number}: ${body.substring(0, 50)}...`);
 
@@ -32,6 +33,7 @@ class MessageHandler {
     }
 
     async handleCommand(msg, body, chat, contact) {
+        const config = configManager.getConfig();
         const command = body.split(' ')[0].toLowerCase();
         const args = body.slice(command.length).trim();
 
@@ -141,6 +143,7 @@ class MessageHandler {
                 return;
             }
 
+            const config = configManager.getConfig();
             await this.client.sendMessage(msg.from, media, {
                 sendMediaAsSticker: true,
                 stickerAuthor: config.bot.name,
@@ -156,6 +159,7 @@ class MessageHandler {
 
     async handleBroadcast(msg, message, contact) {
         try {
+            const config = configManager.getConfig();
             if (!config.bot.adminNumbers.includes(contact.id._serialized)) {
                 await msg.reply('❌ Maaf, hanya admin yang dapat menggunakan fitur broadcast.');
                 return;
