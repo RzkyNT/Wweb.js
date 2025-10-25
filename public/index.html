@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Bot Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🤖 WhatsApp Bot Dashboard</h1>
+            <p class="subtitle">Monitoring & Control Panel</p>
+        </header>
+
+        <div class="status-grid">
+            <div class="status-card">
+                <div class="card-icon">🟢</div>
+                <div class="card-content">
+                    <h3>Status Bot</h3>
+                    <p id="bot-status" class="status-text">Loading...</p>
+                </div>
+            </div>
+
+            <div class="status-card">
+                <div class="card-icon">💬</div>
+                <div class="card-content">
+                    <h3>Total Pesan</h3>
+                    <p id="total-messages" class="stat-number">0</p>
+                </div>
+            </div>
+
+            <div class="status-card">
+                <div class="card-icon">🤖</div>
+                <div class="card-content">
+                    <h3>AI Requests</h3>
+                    <p id="ai-requests" class="stat-number">0</p>
+                </div>
+            </div>
+
+            <div class="status-card">
+                <div class="card-icon">⏱️</div>
+                <div class="card-content">
+                    <h3>Uptime</h3>
+                    <p id="uptime" class="stat-number">0s</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="features-section">
+            <h2>📋 Fitur Bot</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <span class="feature-icon">✅</span>
+                    <span>Auto Reply</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🤖</span>
+                    <span>AI Chat (Gemini)</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">👥</span>
+                    <span>Group Management</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🖼️</span>
+                    <span>Media Support</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">📢</span>
+                    <span>Broadcast</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🎨</span>
+                    <span>Sticker Maker</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="commands-section">
+            <h2>⌨️ Daftar Perintah</h2>
+            <div class="commands-list">
+                <div class="command-item">
+                    <code>!help</code>
+                    <span>Menampilkan bantuan</span>
+                </div>
+                <div class="command-item">
+                    <code>!menu</code>
+                    <span>Menampilkan menu utama</span>
+                </div>
+                <div class="command-item">
+                    <code>!ai [pesan]</code>
+                    <span>Chat dengan AI</span>
+                </div>
+                <div class="command-item">
+                    <code>!sticker</code>
+                    <span>Buat stiker dari gambar</span>
+                </div>
+                <div class="command-item">
+                    <code>!broadcast [pesan]</code>
+                    <span>Kirim pengumuman (Admin only)</span>
+                </div>
+                <div class="command-item">
+                    <code>!info</code>
+                    <span>Informasi bot</span>
+                </div>
+                <div class="command-item">
+                    <code>ai: [pertanyaan]</code>
+                    <span>Alternative AI command</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>ℹ️ Informasi</h2>
+            <p>Bot ini menggunakan <strong>whatsapp-web.js</strong> dan <strong>Gemini AI</strong> untuk memberikan pengalaman chat yang cerdas dan otomatis.</p>
+            <p>Dashboard ini akan otomatis refresh setiap 5 detik untuk menampilkan data terbaru.</p>
+        </div>
+    </div>
+
+    <script src="/js/dashboard.js"></script>
+</body>
+</html>
