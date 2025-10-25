@@ -2,7 +2,7 @@ const config = {
     bot: {
         name: "WhatsApp Bot AI",
         prefix: "!",
-        adminNumbers: [], // Format: ["6281234567890@c.us"]
+        adminNumbers: ["6281284565941@c.us"], // Format: ["6281234567890@c.us"]
     },
     features: {
         autoReply: true,
@@ -27,9 +27,9 @@ const config = {
                 "4️⃣ Bantuan - ketik !help",
         
         "!info": "ℹ️ *Informasi Bot*\n\n" +
-                "🤖 Nama: WhatsApp Bot AI\n" +
-                "⚡ Powered by: Gemini AI\n" +
-                "📦 Framework: whatsapp-web.js\n" +
+                "🤖 Nama: WhatsApp Panel Rzky\n" +
+                "⚡ Powered by: Doa Ibu\n" +
+                "📦 Framework: Node.js\n" +
                 "🚀 Status: Online",
     },
     welcomeMessage: "👋 Halo! Selamat datang di grup ini! 🎉\n\nJangan lupa baca deskripsi grup ya. Ketik !help untuk melihat fitur bot.",
