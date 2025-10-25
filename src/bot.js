@@ -5,15 +5,34 @@ const logger = require('./utils/logger');
 const config = require('./utils/config');
 const MessageHandler = require('./handlers/messageHandler');
 const GroupHandler = require('./handlers/groupHandler');
+const { execSync } = require('child_process');
 
 class WhatsAppBot {
     constructor() {
+        let chromiumPath;
+        try {
+            chromiumPath = execSync('which chromium').toString().trim();
+            logger.info(`Using system Chromium at: ${chromiumPath}`);
+        } catch (error) {
+            logger.info('System Chromium not found, using bundled version');
+        }
+
         this.client = new Client({
             authStrategy: new LocalAuth({
                 dataPath: '.wwebjs_auth'
             }),
             puppeteer: {
-                args: ['--no-sandbox', '--disable-setuid-sandbox'],
+                headless: true,
+                args: [
+                    '--no-sandbox',
+                    '--disable-setuid-sandbox',
+                    '--disable-dev-shm-usage',
+                    '--disable-accelerated-2d-canvas',
+                    '--no-first-run',
+                    '--no-zygote',
+                    '--disable-gpu'
+                ],
+                executablePath: chromiumPath || undefined,
             }
         });
 
